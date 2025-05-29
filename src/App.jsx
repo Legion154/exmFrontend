@@ -1,0 +1,36 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+const App = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users`)
+      .then((res) => setUsers(res.data));
+  }, []);
+
+  return (
+    <div>
+      <h1>Hello world</h1>
+      {users.map((el) => {
+        return (
+          <table key={el._id}>
+            <thead>
+              <tr>
+                <th>{el._id}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{el.name}</td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      })}
+    </div>
+  );
+};
+
+export default App;
