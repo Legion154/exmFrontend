@@ -10,7 +10,9 @@ const App = () => {
       .then((res) => setUsers(res.data));
   }, []);
 
-  return (
+  return !users ? (
+    "Loading..."
+  ) : (
     <div>
       <h1>Hello world</h1>
       {users.map((el) => {
