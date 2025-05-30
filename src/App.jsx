@@ -27,6 +27,11 @@ const App = () => {
     ageRef.current.value = null;
   };
 
+  const deleteUser = (id) => {
+    axios
+      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/${id}`)
+      .then(() => getUsers());
+  };
   useEffect(() => {
     getUsers();
   }, []);
@@ -34,7 +39,7 @@ const App = () => {
   return !users ? (
     <Loading />
   ) : (
-    <div>
+    <main className="p-2">
       <h1 className="text-5xl font-bold">Hello world</h1>
 
       <form
@@ -67,6 +72,14 @@ const App = () => {
             <thead>
               <tr>
                 <th>{el._id}</th>
+                <th>
+                  <button
+                    onClick={() => deleteUser(el._id)}
+                    className="ml-10 px-4 py-0.5 text-sm text-white bg-red-500 rounded-md"
+                  >
+                    delete
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +91,7 @@ const App = () => {
           </table>
         );
       })}
-    </div>
+    </main>
   );
 };
 
