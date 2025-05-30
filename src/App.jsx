@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Loading } from "./components/Loading";
+import axios from "axios";
 
 const App = () => {
   const [users, setUsers] = useState([]);
 
-  useEffect(async () => {
-    const api = await fetch(
-      `${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users`
-    );
-    const res = api.json();
-    setUsers(res.data);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users`)
+      .then((res) => setUsers(res.data));
   }, []);
 
   return !users ? (
