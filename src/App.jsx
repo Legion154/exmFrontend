@@ -36,11 +36,11 @@ const App = () => {
       .then(() => getUsers());
   };
   useEffect(() => {
-    socket.on("user-added", () => {
+    socket.on("user-updated", () => {
       getUsers();
     });
 
-    return () => socket.disconnect();
+    return () => socket.off("user-updated");
   }, []);
 
   return !users ? (
