@@ -16,6 +16,13 @@ const App = () => {
   ) : (
     <div>
       <h1>Hello world</h1>
+
+      <label htmlFor="new">
+        <input type="text" name="new" />
+        <input type="number" />
+        <button type="submit">submit</button>
+      </label>
+
       {users.map((el) => {
         return (
           <table key={el._id}>
@@ -27,6 +34,7 @@ const App = () => {
             <tbody>
               <tr>
                 <td>{el.name}</td>
+                <td>{el.age}</td>
               </tr>
             </tbody>
           </table>
