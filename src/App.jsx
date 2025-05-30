@@ -36,11 +36,9 @@ const App = () => {
       .then(() => getUsers());
   };
   useEffect(() => {
-    socket.on("user-updated", () => {
-      getUsers();
-    });
+    socket.on("user-updated", getUsers);
 
-    return () => socket.off("user-updated");
+    return () => socket.off("user-updated", getUsers);
   }, []);
 
   return !users ? (
