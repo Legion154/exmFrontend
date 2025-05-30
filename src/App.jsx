@@ -16,6 +16,12 @@ const App = () => {
       .then((res) => setUsers(res.data));
   };
 
+  useEffect(() => {
+    getUsers();
+    socket.on("user-updated", getUsers);
+    return () => socket.off("user-updated", getUsers);
+  }, []);
+
   const submitted = (e) => {
     e.preventDefault();
 
@@ -24,10 +30,10 @@ const App = () => {
         name: nameRef.current.value,
         age: ageRef.current.value,
       })
-      .then(() => getUsers());
-
-    nameRef.current.value = null;
-    ageRef.current.value = null;
+      .then(() => {
+        nameRef.current.value = "";
+        ageRef.current.value = "";
+      });
   };
 
   const deleteUser = (id) => {
@@ -35,11 +41,6 @@ const App = () => {
       .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_URL}/users/${id}`)
       .then(() => getUsers());
   };
-  useEffect(() => {
-    socket.on("user-updated", getUsers);
-
-    return () => socket.off("user-updated", getUsers);
-  }, []);
 
   return !users ? (
     <Loading />
