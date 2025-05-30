@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Loading } from "./components/Loading";
+import { io } from "socket.io-client";
 import axios from "axios";
+
+const socket = io(import.meta.env.VITE_REACT_APP_BACKEND_URL);
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -33,7 +36,11 @@ const App = () => {
       .then(() => getUsers());
   };
   useEffect(() => {
-    getUsers();
+    socket.on("user-added", () => {
+      getUsers();
+    });
+
+    return () => socket.disconnect();
   }, []);
 
   return !users ? (
